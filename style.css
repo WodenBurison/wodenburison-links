@@ -1,20 +1,24 @@
-/* Woden Burison link hub -- reuses the "handwritten field journal" theme
-   built for wodensadventures-site (themes/journal.css), generalized from
-   verse cards to generic link cards. */
+/* Woden Burison link hub -- "Windows 95/98/2000 desktop" theme.
+   Each link is its own little pop-up browser window scattered across a teal
+   desktop, faux OS chrome built entirely from borders/box-shadows (no image
+   assets). Windows sit "inactive" (gray title bar) until hovered/focused,
+   which flips them to the classic active blue gradient title bar -- like
+   clicking to bring a window forward on a cluttered real desktop. Taskbar is
+   fixed to the bottom of the viewport. */
 
 :root {
-  --paper-bg: #ddc9a1;
-  --paper-bg-fleck-dark: rgba(74, 54, 30, 0.08);
-  --paper: #f4ecd7;
-  --paper-line: rgba(72, 50, 30, 0.12);
-  --card-bg: #f8efd7;
-  --ink: #2e2a24;
-  --ink-blue: #24344d;
-  --ink-blue-soft: #4a6483;
-  --accent-red: #9c3b2e;
-  --accent-red-soft: rgba(156, 59, 46, 0.35);
-  --font-display: "Caveat", cursive;
-  --font-hand: "Patrick Hand", cursive;
+  --desktop-teal: #008080;
+  --face: #c0c0c0;          /* classic "3D Face" button/window gray */
+  --face-light: #dfdfdf;
+  --face-dark: #808080;
+  --face-darker: #000000;
+  --white: #ffffff;
+  --titlebar-from: #000080;
+  --titlebar-to: #1084d0;
+  --content-bg: #ffffff;
+  --selection-bg: #000080;
+  --selection-text: #ffffff;
+  --font-ui: Tahoma, "MS Sans Serif", Geneva, Verdana, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -22,170 +26,256 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--paper-bg);
-  color: var(--ink);
-  font-family: var(--font-hand);
-  line-height: 1.6;
-}
-
-a { color: inherit; }
-
-.page {
   min-height: 100vh;
-  padding: 3.5rem 1.5rem 5rem;
-  background-image: radial-gradient(var(--paper-bg-fleck-dark) 1px, transparent 1.6px);
-  background-size: 15px 15px;
+  background: var(--desktop-teal);
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: #000;
 }
 
-.header {
-  text-align: center;
-  margin: 0 auto 3rem;
-  max-width: 640px;
-}
-.avatar {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  margin: 0 auto 1rem;
-  background: var(--card-bg);
-  border: 3px solid var(--ink-blue);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: var(--ink-blue);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
-  transform: rotate(-2deg);
-  overflow: hidden;
-}
-.avatar img { width: 100%; height: 100%; object-fit: cover; }
+a { color: inherit; text-decoration: none; }
 
-.site-title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 3.4rem;
-  line-height: 1;
-  margin: 0;
-  color: var(--ink-blue);
-  text-shadow: 1px 2px 0 rgba(255, 250, 235, 0.5);
-  transform: rotate(-1deg);
-}
-.tagline {
-  font-size: 1.1rem;
-  margin: 0.6rem 0 0;
-  color: var(--ink);
-  opacity: 0.75;
-  font-style: italic;
-}
+/* ---------------- Desktop + decorative icons ---------------- */
 
-.link-board {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 2.5rem 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.link-card {
+.desktop {
+  min-height: 100vh;
+  padding: 1.5rem 1.5rem 4.5rem;
   position: relative;
+}
+
+.desktop-icon {
+  position: absolute;
+  width: 74px;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  background: var(--card-bg);
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 27px,
-    var(--paper-line) 28px
-  );
-  border-left: 3px solid var(--accent-red-soft);
-  border-radius: 3px;
-  padding: 1.7rem 1.4rem 1.4rem;
-  text-decoration: none;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35), 0 2px 0 rgba(0, 0, 0, 0.1);
-  transform: rotate(-1.2deg);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  align-items: center;
+  gap: 4px;
+  color: var(--white);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  font-size: 11px;
+  text-align: center;
 }
-.link-board a.link-card:nth-child(2n) { transform: rotate(1deg); }
-.link-board a.link-card:nth-child(3n) { transform: rotate(-0.5deg); }
-.link-card:hover {
-  transform: rotate(0deg) translateY(-4px);
-  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.4), 0 2px 0 rgba(0, 0, 0, 0.1);
-  text-decoration: none;
+.desktop-icon svg { width: 40px; height: 40px; }
+.desktop-icon--computer { top: 1.5rem; left: 1.5rem; }
+.desktop-icon--bin { top: 8.5rem; left: 1.5rem; }
+
+@media (max-width: 640px) {
+  .desktop-icon { display: none; }
 }
 
-.link-card-pin {
-  position: absolute;
-  top: -9px;
-  left: 50%;
-  transform: translateX(-50%);
+/* ---------------- Popup window board ---------------- */
+
+.popup-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2.2rem 1.6rem;
+  max-width: 1080px;
+  margin: 1rem auto 0;
+}
+
+.popup {
+  display: block;
+  background: var(--face);
+  padding: 3px;
+  border-top: 1px solid var(--white);
+  border-left: 1px solid var(--white);
+  border-right: 1px solid var(--face-darker);
+  border-bottom: 1px solid var(--face-darker);
+  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, z-index 0s;
+  position: relative;
+}
+/* messy "scattered pop-ups" rotation, undone on hover/focus */
+.popup-board a.popup:nth-child(2n) { transform: rotate(-1.1deg); }
+.popup-board a.popup:nth-child(3n) { transform: rotate(1.3deg); }
+.popup-board a.popup:nth-child(4n) { transform: rotate(-0.5deg); }
+.popup-board a.popup:nth-child(5n) { transform: rotate(0.8deg); }
+.popup:hover,
+.popup:focus-visible {
+  transform: rotate(0deg) translateY(-3px) scale(1.015);
+  box-shadow: 6px 10px 22px rgba(0, 0, 0, 0.45);
+  z-index: 5;
+  outline: none;
+}
+
+.popup-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 3px 4px 3px 6px;
+  background: var(--face);
+  color: #4d4d4d;
+  font-weight: 700;
+  font-size: 12px;
+}
+.popup:hover .popup-titlebar,
+.popup:focus-visible .popup-titlebar {
+  background: linear-gradient(90deg, var(--titlebar-from), var(--titlebar-to));
+  color: var(--white);
+}
+.popup-title {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.popup-title svg { width: 14px; height: 14px; flex-shrink: 0; }
+.popup-controls { display: flex; gap: 2px; flex-shrink: 0; }
+.tb-btn {
   width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #e8746a, var(--accent-red) 70%);
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.45);
-}
-
-.link-card-stamp {
-  font-family: var(--font-hand);
-  font-size: 0.66rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--accent-red);
-  border: 1.5px dashed var(--accent-red);
-  border-radius: 3px;
-  padding: 0.1rem 0.45rem;
-  transform: rotate(-2deg);
-  opacity: 0.85;
-  width: fit-content;
-}
-
-.link-card-title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 2rem;
-  line-height: 1.05;
-  margin: 0.15rem 0 0;
-  color: var(--ink-blue);
-}
-.link-card-desc { margin: 0.3rem 0 0; font-size: 0.98rem; color: var(--ink); }
-.link-card-cta {
-  margin-top: 0.5rem;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: var(--accent-red);
-  align-self: flex-start;
-  border-bottom: 2px solid var(--accent-red);
-}
-
-.link-card--ghost {
-  background: transparent;
-  background-image: none;
-  border: 2px dashed rgba(46, 42, 36, 0.25);
-  border-left: 2px dashed rgba(46, 42, 36, 0.25);
-  box-shadow: none;
+  height: 14px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  min-height: 160px;
-  transform: rotate(0.6deg);
-  color: rgba(46, 42, 36, 0.45);
-}
-.link-card--ghost:hover { transform: rotate(0.6deg); box-shadow: none; }
-.link-card--ghost .link-card-title { color: rgba(46, 42, 36, 0.35); font-size: 1.6rem; }
-.link-card--ghost .link-card-desc { color: rgba(46, 42, 36, 0.45); }
-
-footer.page-footer {
-  text-align: center;
-  margin-top: 3rem;
-  font-size: 0.85rem;
-  color: rgba(46, 42, 36, 0.55);
+  background: var(--face);
+  border-top: 1px solid var(--face-light);
+  border-left: 1px solid var(--face-light);
+  border-right: 1px solid var(--face-darker);
+  border-bottom: 1px solid var(--face-darker);
+  font-size: 10px;
+  font-weight: 700;
+  color: #000;
+  line-height: 1;
 }
 
-@media (max-width: 480px) {
-  .site-title { font-size: 2.6rem; }
-  .page { padding: 2.5rem 1rem 4rem; }
+.popup-address {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px;
+  background: var(--face);
+  border-top: 1px solid var(--face-dark);
+}
+.addr-label { font-size: 10.5px; color: #333; flex-shrink: 0; }
+.addr-field {
+  flex: 1;
+  background: var(--content-bg);
+  border-top: 1px solid var(--face-darker);
+  border-left: 1px solid var(--face-darker);
+  border-right: 1px solid var(--white);
+  border-bottom: 1px solid var(--white);
+  padding: 1px 5px;
+  font-size: 10.5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #000;
+}
+
+.popup-body {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  background: var(--content-bg);
+  padding: 0.85rem 0.8rem;
+  min-height: 78px;
+}
+.popup-icon { width: 40px; height: 40px; flex-shrink: 0; }
+.popup-text { flex: 1; min-width: 0; }
+.popup-stamp {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--titlebar-from);
+  border: 1px dotted var(--titlebar-from);
+  padding: 0 4px;
+  margin-bottom: 0.3rem;
+}
+.popup-desc { margin: 0; font-size: 12px; line-height: 1.4; color: #111; }
+
+.popup-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 7px;
+  background: var(--face);
+  border-top: 1px solid var(--face-dark);
+  font-size: 11px;
+}
+.popup-cta { font-weight: 700; color: var(--titlebar-from); }
+.popup:hover .popup-cta,
+.popup:focus-visible .popup-cta { text-decoration: underline; }
+
+/* welcome popup gets a bit more room and always reads as "active" */
+.popup--welcome { grid-column: span 2; }
+.popup--welcome .popup-titlebar {
+  background: linear-gradient(90deg, var(--titlebar-from), var(--titlebar-to));
+  color: var(--white);
+}
+.popup--welcome .popup-body { align-items: center; }
+.popup--welcome h1 { margin: 0 0 0.2rem; font-size: 1.3rem; font-family: Georgia, "Times New Roman", serif; }
+.popup--welcome .popup-desc { font-style: italic; }
+@media (max-width: 560px) {
+  .popup--welcome { grid-column: span 1; }
+}
+
+/* ---------------- Taskbar ---------------- */
+
+.taskbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px;
+  background: var(--face);
+  border-top: 1px solid var(--white);
+  z-index: 20;
+}
+.start-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 3px 10px 3px 6px;
+  background: var(--face);
+  border-top: 1px solid var(--white);
+  border-left: 1px solid var(--white);
+  border-right: 1px solid var(--face-darker);
+  border-bottom: 1px solid var(--face-darker);
+}
+.start-flag { width: 15px; height: 15px; flex-shrink: 0; }
+
+.taskbar-sep {
+  width: 2px;
+  align-self: stretch;
+  margin: 3px 2px;
+  border-left: 1px solid var(--face-dark);
+  border-right: 1px solid var(--white);
+}
+
+.taskbar-spacer { flex: 1; }
+
+.tray {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  font-size: 12px;
+  border-top: 1px solid var(--face-dark);
+  border-left: 1px solid var(--face-dark);
+  border-right: 1px solid var(--white);
+  border-bottom: 1px solid var(--white);
+}
+
+@media (max-width: 640px) {
+  .popup-board { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 }
