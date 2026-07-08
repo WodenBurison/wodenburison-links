@@ -1,9 +1,8 @@
 # wodenburison.space
 
-Woden Burison's link hub — a single static page in the same "handwritten field
-journal" theme as [Woden's Adventures](https://wodensadventures.quest/)
-(`themes/journal.css` in that repo). No build step: just `index.html` +
-`style.css`.
+Woden Burison's link hub — a single static page. No build step: just
+`index.html` + `style.css`. Cross-links to [Woden's Zines](https://wodenzines.online/)
+and the [Neocities OC site](https://wodenburison.neocities.org/).
 
 ## Editing links
 
